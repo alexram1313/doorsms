@@ -22,10 +22,10 @@ try:
     #Replace args with your email provider's SMTP details
     server = smtplib.SMTP( "smtp.gmail.com", 587 )
     server.starttls()
-    server.login( cred.FROM, cred.PASS )
     #Function to call on new thread
     #Because of race conditions, this needs to be done quickly or on diff thread
     def send_msg(opened:bool):
+        server.login( cred.FROM, cred.PASS )
         #Compile message string to print and send.
         #Ex: '\nDoor was closed at 5:50:20 PM'
         #This way is used because it is quickest and we have race conditions!
@@ -33,6 +33,7 @@ try:
                             time.strftime('%I:%M:%S %p')])
         print(str_print)
         server.sendmail(cred.FROM, cred.TO, str_print)
+        server.quit()
 
 
 
