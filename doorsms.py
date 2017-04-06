@@ -19,12 +19,12 @@ try:
 
     #Setting up connection to SMTP Server for sending email/sms.
     print('Setting up SMS...')
-    #Replace args with your email provider's SMTP details
-    server = smtplib.SMTP( "smtp.gmail.com", 587 )
-    server.starttls()
     #Function to call on new thread
     #Because of race conditions, this needs to be done quickly or on diff thread
     def send_msg(opened:bool):
+        #Replace args with your email provider's SMTP details
+        server = smtplib.SMTP( "smtp.gmail.com", 587 )
+        server.starttls()
         server.login( cred.FROM, cred.PASS )
         #Compile message string to print and send.
         #Ex: '\nDoor was closed at 5:50:20 PM'
